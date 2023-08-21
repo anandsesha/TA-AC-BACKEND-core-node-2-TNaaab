@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 
 function handleRequest(req, res) {
+  res.setHeader('Content-Type', 'text/plain');
   fs.createReadStream('./readme.txt').pipe(res);
 }
 
