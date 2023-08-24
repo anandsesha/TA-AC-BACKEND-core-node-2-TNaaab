@@ -4,17 +4,13 @@ const qs = require('querystring');
 
 let path = require('path');
 
-let serverAbsPath = path.dirname(__dirname + '/server.js');
-console.log(serverAbsPath);
+console.log(__filename);
 
-let appAbsPath = path.dirname(__dirname, 'app.js');
-console.log(appAbsPath);
+console.log(__dirname + '/app.js');
 
-let relIndexPath = path.dirname(__filename, 'index.html');
-console.log(relIndexPath);
+console.log('./index.html');
 
-let indexAbsolutePath = path.dirname(__filename, 'index.html');
-console.log(indexAbsolutePath);
+console.log(path.join(__dirname, '/index.html'));
 
 // Capture data on server
 let http = require('http');
