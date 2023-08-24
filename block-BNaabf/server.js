@@ -11,6 +11,7 @@ console.log(path.join(__dirname, '/projects/client/index.js'));
 const http = require('http');
 const fs = require('fs');
 const qs = require('querystring');
+const { stdin } = require('process');
 
 function handleRequest(req, res) {
   var store = '';
@@ -23,15 +24,18 @@ function handleRequest(req, res) {
   req.on('end', () => {
     if (req.method === 'GET' && req.url === '/form') {
       res.setHeader('Content-Type', 'text/html');
-      fs.readFile('./form.html', (err, content) => {
-        console.log(`Form data sent to client`);
-        res.write(content);
-        res.end();
-      });
+      //   fs.readFile('./form.html', (err, content) => {
+      //     console.log(`Form data sent to client`);
+      //     res.write(content);
+      //     res.end();
+      //   });
+      fs.createReadStream('./form.html').pipe(res);
     } else if (req.method === 'POST' && req.url === '/form') {
-      res.setHeader('Content-Type', 'text/html');
+      //   console.log(store); // Browser -> submit form  -> data obtained in QueryString format like name=Anand&email=anandseshadri16%40gmail.com&age=27
       let parsedJSONData = qs.parse(store);
       console.log(typeof parsedJSONData.name); //string
+
+      res.setHeader('Content-Type', 'text/html');
       res.write(
         `<h1>${parsedJSONData.name}</h1><h2>${parsedJSONData.email}</h2><h3>${parsedJSONData.age}</h3>`
       );
